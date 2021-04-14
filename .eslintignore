@@ -1,0 +1,11 @@
+.eslintrc.js
+babel.config.js
+jest.config.js
+metro.config.js
+
+# Folders
+ios/
+android/
+node_modules/
+dist
+coverage
