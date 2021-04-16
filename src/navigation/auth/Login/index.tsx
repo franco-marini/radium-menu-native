@@ -1,22 +1,33 @@
 import { Controller, useForm } from 'react-hook-form';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
+import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
+import { useMutation } from '@apollo/client';
 
 import { Container, Form, StyledButton, Title, styles } from './styles';
 import { Fields, Props } from './types';
+import { login } from '../../../graphql/mutations/auth';
 
 const Login: FC<Props> = ({ navigation }: Props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const { control, handleSubmit, formState } = useForm<Fields>({
     mode: 'onChange',
   });
 
+  const SIGN_IN = login({ schema: 'userToken' });
+  const [signIn, { loading }] = useMutation(SIGN_IN, {
+    onCompleted({ signIn }) {
+      if (signIn.userToken) {
+        navigation.navigate('AppStack');
+      }
+    },
+    onError(error) {
+      Alert.alert('Oops! Something went wrong!', error.message);
+    },
+  });
+
   const onSubmit = ({ email, password }: Fields) => {
-    setEmail(email);
-    setPassword(password);
-    navigation.navigate('AppStack');
+    signIn({ variables: { email, password } });
   };
 
   return (
@@ -37,7 +48,7 @@ const Login: FC<Props> = ({ navigation }: Props) => {
           rules={{
             required: true,
           }}
-          defaultValue={email || ''}
+          defaultValue=''
         />
         <Controller
           control={control}
@@ -54,13 +65,14 @@ const Login: FC<Props> = ({ navigation }: Props) => {
           rules={{
             required: true,
           }}
-          defaultValue={password || ''}
+          defaultValue=''
         />
         <StyledButton
           title='Sign In'
           disabled={!formState.isValid}
           onPress={handleSubmit(onSubmit)}
           containerStyle={styles.buttonContainerStyle}
+          loading={loading}
         />
       </Form>
     </Container>

@@ -5,7 +5,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
+    "start": "react-native start --reset-cache",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
@@ -15,10 +15,12 @@
     }
   },
   "dependencies": {
+    "@apollo/client": "^3.3.15",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
     "@types/react-native-dotenv": "^0.2.0",
+    "graphql": "^15.5.0",
     "react": "17.0.1",
     "react-hook-form": "^7.1.1",
     "react-native": "0.64.0",
