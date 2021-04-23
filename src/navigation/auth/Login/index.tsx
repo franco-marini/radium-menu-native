@@ -2,7 +2,6 @@ import * as yup from 'yup';
 import { Controller, useForm } from 'react-hook-form';
 import React, { FC, useCallback } from 'react';
 import { Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
 import { useMutation } from '@apollo/client';
@@ -10,6 +9,7 @@ import { useMutation } from '@apollo/client';
 import { Container, Form, StyledButton, Title, styles } from './styles';
 import { Fields, Props } from './types';
 import { login } from '../../../graphql/mutations/auth';
+import { setToken } from '../../../utils/async-storage';
 import theme from '../../../utils/theme';
 
 const Login: FC<Props> = ({ navigation }: Props) => {
@@ -62,14 +62,14 @@ const Login: FC<Props> = ({ navigation }: Props) => {
       try {
         if (signIn.userToken) {
           navigation.navigate('AppStack');
-          await AsyncStorage.setItem('user-token', signIn.userToken);
+          await setToken(signIn.userToken);
         }
       } catch (e) {
-        console.log('Oops! Something went wrong!', e.message);
+        console.warn('Oops! Something went wrong!', e.message);
       }
     },
     onError(error) {
-      console.log('Error', error);
+      console.warn('Error', error);
       Alert.alert('Oops! Something went wrong!', error.message);
     },
   });

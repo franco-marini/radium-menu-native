@@ -1,15 +1,9 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { RootStackParamList } from '..';
-
-type AuthStackParamList = {
-  Login: undefined;
-};
-
-export default AuthStackParamList;
+import { RootStackParamList } from '../..';
 
 export type Props = {
-  route: RouteProp<RootStackParamList, 'AuthStack'>;
+  route: RouteProp<RootStackParamList, 'Foods'>;
   navigation: StackNavigationProp<RootStackParamList>;
 };
