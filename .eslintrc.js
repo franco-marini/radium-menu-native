@@ -24,7 +24,8 @@ module.exports = {
     }],
     'no-shadow': 'off',
     'import/no-cycle': 'off',
-    'no-console': ['error', { allow: ['warn', 'error'] }]
+    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'import/prefer-default-export': 'off',
   },
   overrides: [
     {
